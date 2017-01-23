@@ -40,7 +40,8 @@ def options():
         if arg.startswith("--"):
 
             if "=" in arg:
-                key, value = arg.split('=')
+                # if it's url, it can contain '=' as part of it
+                key, value = arg.split('=', 1)
             else:
                 key, value = arg, "True"
 

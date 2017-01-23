@@ -62,22 +62,23 @@ RUN \
 ###
 ## Python
 
-ENV PYENV_FILE v20160310.zip
+ENV PYENV_FILE v1.0.5.zip
+ENV PYENV_FILE_UNDERSCORE pyenv-1.0.5
 ENV PYENV_ROOT /opt/pyenv
 
 RUN wget https://github.com/yyuu/pyenv/archive/${PYENV_FILE} \
       --no-verbose \
   && unzip $PYENV_FILE -d $PYENV_ROOT \
-  && mv $PYENV_ROOT/pyenv-20160310/* $PYENV_ROOT/ \
-  && rm -r $PYENV_ROOT/pyenv-20160310
+  && mv $PYENV_ROOT/${PYENV_FILE_UNDERSCORE}/* $PYENV_ROOT/ \
+  && rm -r $PYENV_ROOT/${PYENV_FILE_UNDERSCORE}
 
 ENV PATH $PYENV_ROOT/bin:$PATH
 
 RUN echo 'eval "$(pyenv init -)"' >> /etc/profile \
     && eval "$(pyenv init -)" \
-    && pyenv install 2.7.11 \
-    && pyenv install 3.5.0 \
-    && pyenv local 3.5.0
+    && pyenv install 2.7.13 \
+    && pyenv install 3.5.2 \
+    && pyenv local 3.5.2
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
@@ -143,6 +144,9 @@ ENV SSLYZE_VERSION 0.11
 ENV SSLYZE_FILE sslyze-0_11-linux64.zip
 ENV SSLYZE_DEST /opt
 
+# set pyenv version for sslyze
+ENV SSLYZE_PYENV 2.7.13
+
 # Would be nice if bash string manipulation worked in ENV as this could use:
 # ${SSLYZE_FILE%.*}
 ENV SSLYZE_PATH ${SSLYZE_DEST}/sslyze-0_11-linux64/sslyze/sslyze.py
@@ -153,8 +157,11 @@ RUN wget https://github.com/nabla-c0d3/sslyze/releases/download/release-${SSLYZE
 ###
 # pshtt
 
-RUN PYENV_VERSION=2.7.11 pyenv exec pip install pshtt
-ENV PSHTT_PATH /opt/pyenv/versions/2.7.11/bin/pshtt
+RUN PYENV_VERSION=2.7.13 pyenv exec pip install pshtt
+ENV PSHTT_PATH /opt/pyenv/versions/2.7.13/bin/pshtt
+
+# one more time set python for pshtt
+ENV PSHTT_PYENV 2.7.13
 
 ###
 # Create Unprivileged User

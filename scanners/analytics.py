@@ -18,7 +18,8 @@ def init(options):
     global analytics_domains
 
     analytics_file = options.get("analytics")
-    if (not analytics_file) or (not analytics_file.endswith(".csv")):
+    # assume, that file in csv format, dont check extension here
+    if not analytics_file:
         no_csv = "--analytics should point to the file path or URL to a CSV of participating domains."
         logging.error(no_csv)
         return False
