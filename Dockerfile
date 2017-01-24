@@ -2,7 +2,7 @@
 
 # USAGE
 
-FROM      ubuntu:14.04.4
+FROM      ubuntu:14.04.5
 MAINTAINER V. David Zvenyach <vladlen.zvenyach@gsa.gov>
 
 ###
@@ -88,8 +88,8 @@ RUN pip3 install -r requirements.txt
 
 # Get RVM.
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-RUN curl -sSL https://get.rvm.io | bash -s stable --ruby=2.1.5
-RUN /bin/bash -l -c "rvm --default use 2.1.5"
+RUN curl -sSL https://get.rvm.io | bash -s stable --ruby=2.1.9
+RUN /bin/bash -l -c "rvm --default use 2.1.9"
 
 # Install Bundler for each version of ruby
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
